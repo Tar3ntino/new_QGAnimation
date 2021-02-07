@@ -29,9 +29,9 @@ class UserController extends AbstractController
 
     public function newUser(Request $request)
     {
+        // Inscription 
         $user = new User(); 
         $form = $this->createForm(UserFormType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

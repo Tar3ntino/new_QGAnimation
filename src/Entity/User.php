@@ -8,9 +8,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 So far, this is just a normal entity. But to use this class in the security system, it must implement Symfony\Component\Security\Core\User\UserInterface. This forces the class to have the five following methods: getRoles(), getPassword(), getSalt(), getUsername(), eraseCredentials() */
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -84,4 +84,22 @@ class User implements UserInterface
 
     public function getSalt() {}
     public function eraseCredentials() {}
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password
+        ]);
+    }
+    public function unserialize($string)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->email,
+            $this->password
+        ) = unserialize($string, ['allowed_classes' => false]);
+    }
 }

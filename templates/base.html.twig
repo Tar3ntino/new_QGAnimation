@@ -34,7 +34,7 @@
         
         <!-- Our Custom CSS -->
         <link rel='stylesheet' type='text/css' media='screen' href="{{ asset('css/style.css') }}">
-
+        <link rel="shortcut icon" type="png" href=" {{ asset('images/favicon.png') }} "/>
         <!-- Front awesome CDN - Pour Icone Menu Burger -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
@@ -59,7 +59,10 @@
                         <div class="col-3 connect">
                             <nav>
                                 <ul id="logoconnect">   
-                                    <li class="logoderoulant"> <i class="fas fa-user fa-2x"></i>  <i class="fas fa-sort-down"></i>
+                                    <li class="logoderoulant"> <i class="fas fa-user fa-2x"></i> {% if (app.user) %} 
+                                        {{app.user.username}} 
+                                    {% endif %}
+                                    <i class="fas fa-sort-down"></i>
                                         <ul class="sousmenu">
                                             <li><a href="{{ path('register') }}">S'inscrire</a></li>
                                             <li><a href="{{ path('login') }}">Se connecter</a></li>

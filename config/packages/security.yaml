@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -9,7 +9,7 @@ security:
         my_provider:
             entity:
                 class: App\Entity\User
-                property: email 
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -20,6 +20,11 @@ security:
               login_path: login
               check_path: login
               provider: my_provider
+
+            logout:
+              path: /logout
+              target: /
+               
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
