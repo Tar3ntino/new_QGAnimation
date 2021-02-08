@@ -38,9 +38,9 @@ public function __construct(UserPasswordEncoderInterface $encoder)
         $user = new User();
         $user->setUsername('admin');
         $user->setPassword(
-            $this->encoder->encodePassword($user, 'monmotdepasse')
+            $this->encoder->encodePassword($user, 'admin')
         ); 
-        $user->setEmail('monemail@monemail.fr');
+        $user->setEmail('admin@admin.fr');
         $manager->persist($user); // sauvegarde de la donnée avant envoi BDD
         $manager->flush();
 
@@ -48,7 +48,7 @@ public function __construct(UserPasswordEncoderInterface $encoder)
         $user_m = new User();
         $user_m->setUsername('membre');
         $user_m->setPassword(
-            $this->encoder->encodePassword($user_m, 'mdp')
+            $this->encoder->encodePassword($user_m, 'membre')
         );
         $user_m->setEmail('membre@membre.fr');
         $manager->persist($user_m);
