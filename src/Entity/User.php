@@ -39,6 +39,12 @@ class User implements UserInterface, \Serializable
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToOne(targetEntity="Address", mappedBy="user")
+     */
+    private $homeAddress;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,6 +124,28 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->password
         ) = unserialize($string, ['allowed_classes' => false]);
+    }
+
+    public function getHomeAddress(): ?Address
+    {
+        return $this->homeAddress;
+    }
+
+    public function setHomeAddress(?Address $homeAddress): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($homeAddress === null && $this->homeAddress !== null) {
+            $this->homeAddress->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($homeAddress !== null && $homeAddress->getUser() !== $this) {
+            $homeAddress->setUser($this);
+        }
+
+        $this->homeAddress = $homeAddress;
+
+        return $this;
     }
 
 }

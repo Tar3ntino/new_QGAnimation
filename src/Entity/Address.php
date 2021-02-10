@@ -22,10 +22,16 @@ class Address
      */
     private $street_address;
 
-/**
- * @ORM\ManyToOne(targetEntity="City", inversedBy="addresses")
- */
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="addresses")
+     */
     private $city;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="homeAddress")
+     */
+
+    private $user;
 
     public function getId(): ?int
     {
@@ -52,6 +58,18 @@ class Address
     public function setCity(?City $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
