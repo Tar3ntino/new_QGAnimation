@@ -30,7 +30,6 @@ class Address
     /**
      * @ORM\OneToOne(targetEntity="User", inversedBy="homeAddress")
      */
-
     private $user;
 
     public function getId(): ?int
