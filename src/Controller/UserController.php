@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserFormType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
@@ -15,22 +15,20 @@ class UserController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    
     private $encoder;
 
     public function __construct(UserPasswordEncoderInterface $encoder)
-        {
-            $this->encoder = $encoder;
-        }
+    {
+        $this->encoder = $encoder;
+    }
 
     /**
      * @Route("/register", name="register")
      */
-
     public function newUser(Request $request)
     {
-        // Inscription 
-        $user = new User(); 
+        // Inscription
+        $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
@@ -42,16 +40,14 @@ class UserController extends AbstractController
             // On envoie notre objet avec notre mot de passe crypté et on l'enregistre
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
-            $em->flush(); 
+            $em->flush();
             // on redirige vers index apres l'INSCRIPTION
             return new RedirectResponse('http://127.0.0.1:8080/qganimation/public/');
-            
-        }else{ 
+        } else {
             //sinon on rend la vue du formulaire avec le formulaire a remplir
-        return $this->render('/home/register.html.twig', [
+            return $this->render('/home/register.html.twig', [
             'form' => $form->createView(),
         ]);
+        }
     }
-    }
-    
 }

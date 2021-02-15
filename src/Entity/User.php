@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /* What’s this UserInterface?¶
 So far, this is just a normal entity. But to use this class in the security system, it must implement Symfony\Component\Security\Core\User\UserInterface. This forces the class to have the five following methods: getRoles(), getPassword(), getSalt(), getUsername(), eraseCredentials() */
 
@@ -23,7 +24,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $username;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -43,7 +44,6 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToOne(targetEntity="Address", mappedBy="user")
      */
     private $homeAddress;
-
 
     public function getId(): ?int
     {
@@ -105,17 +105,24 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getSalt() {}
-    public function eraseCredentials() {}
+    public function getSalt()
+    {
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
     public function serialize()
     {
         return serialize([
             $this->id,
             $this->username,
             $this->email,
-            $this->password
+            $this->password,
         ]);
     }
+
     public function unserialize($string)
     {
         list(
@@ -134,12 +141,12 @@ class User implements UserInterface, \Serializable
     public function setHomeAddress(?Address $homeAddress): self
     {
         // unset the owning side of the relation if necessary
-        if ($homeAddress === null && $this->homeAddress !== null) {
+        if (null === $homeAddress && null !== $this->homeAddress) {
             $this->homeAddress->setUser(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($homeAddress !== null && $homeAddress->getUser() !== $this) {
+        if (null !== $homeAddress && $homeAddress->getUser() !== $this) {
             $homeAddress->setUser($this);
         }
 
@@ -147,5 +154,4 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
 }
